@@ -47,6 +47,8 @@ static const int kStateKey;
     if (CGRectIsEmpty(keyboardRect)) {
         return;
     }
+    self.scrollEnabled = YES;
+
     
     TPKeyboardAvoidingState *state = self.keyboardAvoidingState;
     
@@ -102,6 +104,9 @@ static const int kStateKey;
         return;
     }
     
+    //added to stop the user scrolling when they should be allowed to, i think the inset/content size should work this out and stop scrolloing automatically though
+    self.scrollEnabled = NO;
+    
     TPKeyboardAvoidingState *state = self.keyboardAvoidingState;
     
     if ( !state.keyboardVisible ) {
@@ -123,6 +128,9 @@ static const int kStateKey;
     self.contentInset = state.priorInset;
     self.scrollIndicatorInsets = state.priorScrollIndicatorInsets;
     self.pagingEnabled = state.priorPagingEnabled;
+    
+    self.contentOffset = CGPointMake(0, 0);
+
 	[self layoutIfNeeded];
     [UIView commitAnimations];
 }
